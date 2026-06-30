@@ -14,7 +14,7 @@ get_current_user) is the only source of truth for identity.
 """
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, String, DateTime, Boolean
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 
 from db import Base
@@ -45,3 +45,41 @@ class User(Base):
 
     def __repr__(self):
         return f"<User id={self.id} email={self.email}>"
+
+# ---------- Onboarding / Guardian Memory foundation ----------
+
+class FinancialProfile(Base):
+    """
+    Created once per user during onboarding. Feeds Guardian Memory,
+    Future Self simulator, Government Scheme matching, and the
+    financial health score calculation.
+    """
+    __tablename__ = "financial_profiles"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), index=True, nullable=False, unique=True)
+
+    # Onboarding Page 1 — How do you earn?
+    income_source = Column(String, nullable=False)
+    # one of: "salaried", "gig", "farmer", "pwd", "retired"
+
+    # Onboarding Page 2 — Tell us about your money
+    monthly_income = Column(Integer, nullable=False)
+    income_regularity = Column(String, nullable=False)
+    # one of: "fixed_monthly", "weekly", "irregular_gig", "seasonal"
+    monthly_expenses = Column(Integer, nullable=False)
+    existing_emi = Column(Integer, nullable=False, default=0)
+    has_emergency_fund = Column(Boolean, nullable=False, default=False)
+    dependents_count = Column(Integer, nullable=False, default=0)
+
+    # Onboarding Page 3 — What worries you most? (max 3)
+    # Stored as a comma-joined string of slugs, e.g. "scams,loans,savings"
+    top_worries = Column(String, nullable=False)
+
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+
+    user = relationship("User", backref="financial_profile", uselist=False)
+
+    def __repr__(self):
+        return f"<FinancialProfile user_id={self.user_id} income_source={self.income_source}>"

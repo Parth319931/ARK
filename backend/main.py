@@ -12,9 +12,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from db import Base, engine, SessionLocal
-from models import User
+from models import User, FinancialProfile
 from auth import hash_password
 from routes import auth as auth_routes
+from routes import memory as memory_routes
 from routes import scam_shield
 
 load_dotenv()
@@ -84,6 +85,7 @@ def on_startup():
 # will be added here in later sessions, e.g.:
 #   app.include_router(scam_routes.router)
 app.include_router(auth_routes.router)
+app.include_router(memory_routes.router)
 app.include_router(scam_shield.router, prefix="/api")
 
 
