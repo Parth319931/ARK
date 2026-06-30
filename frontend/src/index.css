@@ -128,3 +128,49 @@
     @apply font-sans;
     }
 }
+
+/* === Accessibility: text size === */
+html[data-text-size="normal"] {
+  font-size: 16px;
+}
+html[data-text-size="large"] {
+  font-size: 19px;
+}
+html[data-text-size="extra-large"] {
+  font-size: 23px;
+}
+html {
+  transition: font-size 0.15s ease;
+}
+
+/* === Accessibility: high contrast ===
+   --contrast-level is a 0-100 number set via JS. We interpolate the
+   theme's background/foreground CSS variables toward pure black/white. */
+html {
+  --contrast-level: 0;
+}
+body {
+  background-color: color-mix(
+    in srgb,
+    var(--background) calc(100% - var(--contrast-level) * 1%),
+    black calc(var(--contrast-level) * 1%)
+  );
+  color: color-mix(
+    in srgb,
+    var(--foreground) calc(100% - var(--contrast-level) * 1%),
+    white calc(var(--contrast-level) * 1%)
+  );
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* === Accessibility: dyslexia-friendly spacing ===
+   --dyslexia-level is a 0-100 number set via JS. */
+html {
+  --dyslexia-level: 0;
+}
+body {
+  letter-spacing: calc(var(--dyslexia-level) * 0.0012em);
+  word-spacing: calc(var(--dyslexia-level) * 0.002em);
+  line-height: calc(1.5 + (var(--dyslexia-level) / 100) * 0.7);
+  transition: letter-spacing 0.15s ease, word-spacing 0.15s ease, line-height 0.15s ease;
+}
