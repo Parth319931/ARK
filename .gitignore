@@ -1,0 +1,31 @@
+# Frontend Dependencies
+**/node_modules/
+**/dist/
+.eslintcache
+
+# Backend Virtual Environments
+**/venv/
+**/.venv/
+ENV/
+env/
+
+# Environment Secret Files (Keep your database string private!)
+**/.env
+**/.env.local
+
+# Python Build and Cache Files
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.pytest_cache/
+**/.mypy_cache/
+
+# Editor and System Files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+Thumbs.db
