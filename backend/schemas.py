@@ -101,3 +101,30 @@ class FinancialProfileResponse(BaseModel):
 class OnboardingStatusResponse(BaseModel):
     onboarding_complete: bool
     profile: Optional[FinancialProfileResponse] = None
+
+# ---------- Dashboard / Insights ----------
+
+class FinancialScoreBreakdown(BaseModel):
+    cash_flow: int
+    savings: int
+    scam_safety: int
+
+
+class DashboardSummaryResponse(BaseModel):
+    financial_health_score: int
+    score_breakdown: FinancialScoreBreakdown
+    monthly_income: int
+    monthly_expenses: int
+    monthly_savings: int
+    guardian_score: int
+    guardian_archetype: str
+
+
+class TwinInsightsResponse(BaseModel):
+    twin_name: str
+    risk_style: str
+    spending: str
+    saving: str
+    advice: str
+    regret_probability: int = Field(ge=0, le=100)
+    future_confidence: int = Field(ge=0, le=100)
