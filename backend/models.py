@@ -83,3 +83,14 @@ class FinancialProfile(Base):
 
     def __repr__(self):
         return f"<FinancialProfile user_id={self.user_id} income_source={self.income_source}>"
+
+class AccessibilitySettings(Base):
+    __tablename__ = "accessibility_settings"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), unique=True, index=True)
+
+    senior_mode = Column(Boolean, default=False)
+    text_size = Column(String, default="normal")       # "normal" | "large" | "extra-large"
+    high_contrast = Column(Integer, default=0)          # 0-100
+    dyslexia_mode = Column(Integer, default=0)           # 0-100

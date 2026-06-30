@@ -18,6 +18,7 @@ from routes import auth as auth_routes
 from routes import memory as memory_routes
 from routes import insights as insights_routes
 from routes import scam_shield
+from routes import accessibility
 
 load_dotenv()
 
@@ -89,6 +90,7 @@ app.include_router(auth_routes.router)
 app.include_router(memory_routes.router)
 app.include_router(insights_routes.router)
 app.include_router(scam_shield.router, prefix="/api")
+app.include_router(accessibility.router, prefix="/api")
 
 
 @app.get("/api/health", tags=["health"])

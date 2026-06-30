@@ -102,6 +102,15 @@ class OnboardingStatusResponse(BaseModel):
     onboarding_complete: bool
     profile: Optional[FinancialProfileResponse] = None
 
+class AccessibilitySettingsRequest(BaseModel):
+    senior_mode: bool
+    text_size: str          # "normal" | "large" | "extra-large"
+    high_contrast: int       # 0-100
+    dyslexia_mode: int        # 0-100
+
+
+class AccessibilitySettingsResponse(AccessibilitySettingsRequest):
+    pass
 # ---------- Dashboard / Insights ----------
 
 class FinancialScoreBreakdown(BaseModel):
