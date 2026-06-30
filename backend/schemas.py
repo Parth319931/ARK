@@ -49,3 +49,12 @@ TokenResponse.model_rebuild()
 
 class MessageResponse(BaseModel):
     message: str
+
+class ScamShieldRequest(BaseModel):
+    message: str
+
+
+class ScamShieldResponse(BaseModel):
+    risk_percentage: int
+    verdict: str  # "risky" | "safe"
+    explanations: list[str]

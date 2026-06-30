@@ -15,6 +15,7 @@ from db import Base, engine, SessionLocal
 from models import User
 from auth import hash_password
 from routes import auth as auth_routes
+from routes import scam_shield
 
 load_dotenv()
 
@@ -83,6 +84,7 @@ def on_startup():
 # will be added here in later sessions, e.g.:
 #   app.include_router(scam_routes.router)
 app.include_router(auth_routes.router)
+app.include_router(scam_shield.router, prefix="/api")
 
 
 @app.get("/api/health", tags=["health"])
